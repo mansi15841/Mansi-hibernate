@@ -13,7 +13,7 @@ public class HibernateConfiguration {
 		public static SessionFactory getsessionFactory() {
 			StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("cfg.xml").build();
 			
-			Metadata metadata = new MetadataSources().getMetadataBuilder().build();
+			Metadata metadata = new MetadataSources(ssr).getMetadataBuilder().build();
 			
 			return metadata.buildSessionFactory();
 			
