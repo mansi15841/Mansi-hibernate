@@ -4,7 +4,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 
+@NamedQueries(
+		{
+			@NamedQuery(
+			name = "EmpByName",
+			query = "from Employee e where e.name = :name"
+			),
+			
+			@NamedQuery(
+			name = "findById",
+			query = "from Employee e where e.id = :id"
+			),
+			
+			@NamedQuery(
+			name = "deleteById",
+			query = "delete from Employee e where e.id = :id"
+			)
+		}
+	)
 @Entity
 public class Employee {
 	
