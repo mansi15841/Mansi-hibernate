@@ -28,7 +28,7 @@ public class HibernateConfiguration {
 			
 			StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().applySettings(properties).build();
 			
-			Metadata metadata = new MetadataSources(ssr).addAnnotatedClass(com.hbn.entity.Employee.class).getMetadataBuilder().build();
+			Metadata metadata = new MetadataSources(ssr).addAnnotatedClasses(com.hbn.entity.Employee.class, com.hbn.entity.Address.class).getMetadataBuilder().build();
 			
 			return metadata.buildSessionFactory();
 			

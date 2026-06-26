@@ -1,31 +1,16 @@
 package com.hbn.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
-
-@NamedQueries(
-		{
-			@NamedQuery(
-			name = "EmpByName",
-			query = "from Employee e where e.name = :name"
-			),
-			
-			@NamedQuery(
-			name = "findById",
-			query = "from Employee e where e.id = :id"
-			),
-			
-			@NamedQuery(
-			name = "deleteById",
-			query = "delete from Employee e where e.id = :id"
-			)
-		}
-	)
 @Entity
 public class Employee {
 	
@@ -35,20 +20,35 @@ public class Employee {
 	private String name, gender;
 	private int salary;
 	
-	public Employee(String name, String gender, int salary) {
+	// column that will not be persist that is not saved in database
+	@Transient
+	private String country;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "add_id") 
+	private Address address;
+	
+	public Employee(String name, String gender, int salary, Address address) {
 		super();
 		this.name = name;
 		this.gender = gender;
 		this.salary = salary;
+		this.address = address;
 	}
-	
-	
+
 
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
 
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 
 	public int getId() {
@@ -83,10 +83,11 @@ public class Employee {
 		this.salary = salary;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary + "]";
+		return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary + ", address="
+				+ address + "]";
 	}
-	
 	
 }
