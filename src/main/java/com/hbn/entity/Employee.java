@@ -1,15 +1,13 @@
 package com.hbn.entity;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Employee {
@@ -20,36 +18,31 @@ public class Employee {
 	private String name, gender;
 	private int salary;
 	
-	// column that will not be persist that is not saved in database
-	@Transient
-	private String country;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Address> address;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "add_id") 
-	private Address address;
 	
-	public Employee(String name, String gender, int salary, Address address) {
+	public Employee(int id, String name, String gender, int salary, List<Address> address) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.salary = salary;
 		this.address = address;
 	}
 
-
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Address getAddress() {
+
+	public List<Address> getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(List<Address> address) {
 		this.address = address;
 	}
-
 
 	public int getId() {
 		return id;
@@ -83,11 +76,10 @@ public class Employee {
 		this.salary = salary;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", salary=" + salary + ", address="
 				+ address + "]";
 	}
-	
+
 }

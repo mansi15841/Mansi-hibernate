@@ -1,5 +1,6 @@
 package com.hbn.learning;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -22,18 +23,32 @@ public class Main {
 		
 		Employee e = new Employee();
 		
-		Address add = new Address();
-		add.setCity("Noida");
-		add.setState("UP");
+		Address add1 = new Address();
+		add1.setCity("Noida");
+		add1.setState("UP");
+		
+		Address add2 = new Address();
+		add2.setCity("Panipat");
+		add2.setState("Haryana");
+		
+		Address add3 = new Address();
+		add3.setCity("GZB");
+		add3.setState("UP");
+		
+		ArrayList<Address> listofAddress = new ArrayList<>();
+		listofAddress.add(add1);
+		listofAddress.add(add2);
+		listofAddress.add(add3);
+		
 		
 		e.setName("Lakhan");
 		e.setGender("male");
 		e.setSalary(40000);
-		e.setAddress(add);
+		e.setAddress(listofAddress);
 		
-		add.setEmployee(e);
-		
-//		session.persist(add);
+		session.persist(add1);
+		session.persist(add2);
+		session.persist(add3);
 		session.persist(e);
 		
 		tx.commit();
@@ -42,11 +57,8 @@ public class Main {
 		
 		Session session = HibernateConfiguration.getsessionFactory().openSession();
 		
-		saveRecord(session);
-		
-		Address address =  session.find(Address.class, 1);
-		System.out.println(address);
-		System.out.println(address.getEmployee());
-//		
+//		saveRecord(session);
+		Employee employee = session.find(Employee.class, 1);
+		System.out.println(employee);
 	}
 }
