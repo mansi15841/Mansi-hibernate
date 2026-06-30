@@ -21,7 +21,6 @@ public class Main {
 	public static void saveRecord(Session session) {
 		Transaction tx = session.beginTransaction();
 		
-		Employee e = new Employee();
 		
 		Address add1 = new Address();
 		add1.setCity("Noida");
@@ -40,11 +39,15 @@ public class Main {
 		listofAddress.add(add2);
 		listofAddress.add(add3);
 		
-		
+		Employee e = new Employee();
 		e.setName("Lakhan");
 		e.setGender("male");
 		e.setSalary(40000);
 		e.setAddress(listofAddress);
+		
+		add1.setEmployee(e);
+		add2.setEmployee(e);
+		add3.setEmployee(e);
 		
 		session.persist(add1);
 		session.persist(add2);
@@ -58,7 +61,10 @@ public class Main {
 		Session session = HibernateConfiguration.getsessionFactory().openSession();
 		
 //		saveRecord(session);
-		Employee employee = session.find(Employee.class, 1);
-		System.out.println(employee);
+		Address address = session.find(Address.class,2);
+		System.out.println(address);
+		System.out.println(address.getEmployee());
+		
+		
 	}
 }
