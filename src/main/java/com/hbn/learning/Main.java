@@ -1,18 +1,13 @@
 package com.hbn.learning;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.MutationQuery;
 
 import com.hbn.configuration.HibernateConfiguration;
-import com.hbn.entity.Address;
 import com.hbn.entity.Employee;
-
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Query;
+import com.hbn.entity.Project;
 
 
 
@@ -21,38 +16,42 @@ public class Main {
 	public static void saveRecord(Session session) {
 		Transaction tx = session.beginTransaction();
 		
+		Project pro1 = new Project();
+		pro1.setProj_name("Banking System");
 		
-		Address add1 = new Address();
-		add1.setCity("Noida");
-		add1.setState("UP");
+		Project pro2 = new Project();
+		pro2.setProj_name("Music Composer");
 		
-		Address add2 = new Address();
-		add2.setCity("Panipat");
-		add2.setState("Haryana");
+		Project pro3 = new Project();
+		pro3.setProj_name("AI System");
 		
-		Address add3 = new Address();
-		add3.setCity("GZB");
-		add3.setState("UP");
 		
-		ArrayList<Address> listofAddress = new ArrayList<>();
-		listofAddress.add(add1);
-		listofAddress.add(add2);
-		listofAddress.add(add3);
+		Employee employee = new Employee();
+		employee.setName("Mansi");
+		employee.setSalary(50000);
+		employee.setGender("female");
 		
-		Employee e = new Employee();
-		e.setName("Lakhan");
-		e.setGender("male");
-		e.setSalary(40000);
-		e.setAddress(listofAddress);
+		Employee employee1 = new Employee();
+		employee1.setName("Krishan");
+		employee1.setSalary(40000);
+		employee1.setGender("male");
 		
-		add1.setEmployee(e);
-		add2.setEmployee(e);
-		add3.setEmployee(e);
+		Employee employee3 = new Employee();
+		employee3.setName("Rahul");
+		employee3.setSalary(40000);
+		employee3.setGender("male");
 		
-		session.persist(add1);
-		session.persist(add2);
-		session.persist(add3);
-		session.persist(e);
+		employee.setProject(Arrays.asList(pro1,pro2));
+		employee1.setProject(Arrays.asList(pro2,pro3));
+		employee3.setProject(Arrays.asList(pro1,pro3));
+		
+		pro1.setEmployee(Arrays.asList(employee,employee3));
+		pro2.setEmployee(Arrays.asList(employee,employee1));
+		pro3.setEmployee(Arrays.asList(employee1,employee3));
+		
+		session.persist(employee);
+		session.persist(employee1);
+		session.persist(employee3);
 		
 		tx.commit();
 	}
@@ -60,10 +59,11 @@ public class Main {
 		
 		Session session = HibernateConfiguration.getsessionFactory().openSession();
 		
-//		saveRecord(session);
-		Address address = session.find(Address.class,2);
-		System.out.println(address);
-		System.out.println(address.getEmployee());
+		//saveRecord(session);
+		
+		Project project = session.find(Project.class, 2);
+		System.out.println(project);
+		System.out.println(project.getEmployee());
 		
 		
 	}
