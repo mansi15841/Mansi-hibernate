@@ -59,11 +59,11 @@ public class Main {
 		
 		Session session = HibernateConfiguration.getsessionFactory().openSession();
 		
-		//saveRecord(session);
+		saveRecord(session);
 		
-		Project project = session.find(Project.class, 2);
-		System.out.println(project);
-		System.out.println(project.getEmployee());
+//		Project project = session.find(Project.class, 2);
+//		System.out.println(project);
+//		System.out.println(project.getEmployee());
 		
 		
 	}
